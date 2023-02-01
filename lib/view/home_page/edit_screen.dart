@@ -45,7 +45,24 @@ class _EditScreenState extends State<EditScreen> {
                       Icons.check_circle,
                       size: 30,
                     ),
-                    onPressed: () async {},
+                    onPressed: () async {
+                      model.mode == "Edit"
+                          ? await model.updateNote(
+                              widget.note!.copyWith(
+                                title: _titleController.text,
+                                content: _descriptionController.text,
+                              ),
+                            )
+                          : await model.addNote(
+                              Note(
+                                id: model.userUid,
+                                title: _titleController.text,
+                                content: _descriptionController.text,
+                                dateCreated: DateTime.now(),
+                              ),
+                            );
+                      Navigator.of(context).pop();
+                    },
                   )
                 : const SizedBox();
           }),
