@@ -19,8 +19,12 @@ class FirestoreDb {
   }
 
   List<Note> _noteFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs
-        .map((doc) => Note.fromJson(doc.data() as Map<String, dynamic>))
-        .toList();
+    return snapshot.docs.map((doc) {
+      return Note.fromFirestore(doc);
+    }).toList();
+  }
+
+  Future deleteNote(String uid) async {
+    return await noteCollection.doc(uid).delete();
   }
 }

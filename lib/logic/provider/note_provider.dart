@@ -36,11 +36,6 @@ class NoteProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // void toggleShowOptions(int index) {
-  //   showOptions[index] = !showOptions[index];
-  //   notifyListeners();
-  // }
-
   void toggleShowOptions(int index) {
     for (var i = 0; i < notes.length; i++) {
       if (i == index) {
@@ -48,6 +43,18 @@ class NoteProvider with ChangeNotifier {
       } else {
         showOptions[i] = false;
       }
+    }
+    notifyListeners();
+  }
+
+  Future deleteNote(int index) async {
+    try {
+      await FirestoreDb().deleteNote(notes[index].documentID!);
+      // notes = await fetchNotes();
+      notes.removeWhere(
+          (element) => element.documentID == notes[index].documentID);
+    } catch (e) {
+      print(e);
     }
     notifyListeners();
   }
