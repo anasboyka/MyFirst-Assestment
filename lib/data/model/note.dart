@@ -5,6 +5,7 @@ class Note {
   String? title;
   String? content;
   DateTime? dateCreated;
+  bool showOption;
   DocumentSnapshot? snapshot;
   DocumentReference? reference;
   String? documentID;
@@ -14,6 +15,7 @@ class Note {
     this.title = '',
     this.content = '',
     this.dateCreated,
+    this.showOption = false,
     this.snapshot,
     this.reference,
     this.documentID,
@@ -46,4 +48,26 @@ class Note {
         'content': content,
         'dateCreated': dateCreated
       };
+
+  Note copyWith({
+    dynamic id,
+    String? title,
+    String? content,
+    DateTime? dateCreated,
+    bool? showOption,
+    DocumentSnapshot? snapshot,
+    DocumentReference? reference,
+    String? documentID,
+  }) {
+    return Note(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      dateCreated: dateCreated ?? this.dateCreated,
+      showOption: showOption ?? this.showOption,
+      snapshot: snapshot ?? this.snapshot,
+      reference: reference ?? this.reference,
+      documentID: documentID ?? this.documentID,
+    );
+  }
 }
