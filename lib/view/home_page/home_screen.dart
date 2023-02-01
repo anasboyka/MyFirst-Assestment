@@ -67,7 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
             //   ),
             // ),
             title: Text(model.notes[index].title ?? ""),
-            subtitle: Text(model.notes[index].content ?? ""),
+            subtitle: model.showContent
+                ? Text(model.notes[index].content ?? "")
+                : null,
             onTap: () {},
             onLongPress: () {},
           ),
@@ -76,10 +78,14 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
-              child: const Icon(Icons.menu),
-              tooltip: 'Show less. Hide notes content',
-              onPressed: () {}),
+          Consumer<NoteProvider>(builder: (context, model, child) {
+            return FloatingActionButton(
+                child: Icon(model.showContent ? Icons.unfold_less : Icons.menu),
+                tooltip: 'Show less. Hide notes content',
+                onPressed: () {
+                  model.toggleContent();
+                });
+          }),
 
           /* Notes: for the "Show More" icon use: Icons.menu */
 

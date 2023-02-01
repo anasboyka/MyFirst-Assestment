@@ -29,4 +29,9 @@ class NoteProvider with ChangeNotifier {
       return [];
     }
   }
+
+  void toggleContent() {
+    showContent = !showContent;
+    notifyListeners();
+  }
 }
