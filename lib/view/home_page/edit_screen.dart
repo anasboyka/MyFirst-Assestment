@@ -63,29 +63,31 @@ class _EditScreenState extends State<EditScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(
           children: [
-            TextFormField(
-              controller: _titleController,
-              initialValue: null,
-              enabled: true,
-              decoration: const InputDecoration(
-                hintText: 'Type the title here',
-              ),
-              onChanged: (value) {},
-            ),
+            Consumer<NoteProvider>(builder: (_, model, child) {
+              return TextFormField(
+                controller: _titleController,
+                enabled: model.mode != "View",
+                decoration: const InputDecoration(
+                  hintText: 'Type the title here',
+                ),
+                onChanged: (value) {},
+              );
+            }),
             const SizedBox(
               height: 5,
             ),
             Expanded(
-              child: TextFormField(
-                  controller: _descriptionController,
-                  enabled: true,
-                  initialValue: null,
-                  maxLines: null,
-                  expands: true,
-                  decoration: const InputDecoration(
-                    hintText: 'Type the description',
-                  ),
-                  onChanged: (value) {}),
+              child: Consumer<NoteProvider>(builder: (_, model, child) {
+                return TextFormField(
+                    controller: _descriptionController,
+                    enabled: model.mode != "View",
+                    maxLines: null,
+                    expands: true,
+                    decoration: const InputDecoration(
+                      hintText: 'Type the description',
+                    ),
+                    onChanged: (value) {});
+              }),
             ),
           ],
         ),
