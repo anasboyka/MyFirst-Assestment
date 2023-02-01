@@ -35,10 +35,12 @@ class LoginProvider with ChangeNotifier {
 
   Future loginWithEmailAndPassword() async {
     try {
+      loadingStart();
       await Auth().loginWithEmailAndPassword(email!, password!);
     } on Exception catch (e) {
       print(e);
       // TODO
     }
+    loadingEnd();
   }
 }

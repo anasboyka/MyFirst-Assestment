@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //loading
-const loading = Center(
+const loadingWidget = Center(
   child: SizedBox(
     width: 24,
     height: 24,

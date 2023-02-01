@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:map_exam/data/model/note.dart';
 import 'package:map_exam/data/remote/firebase/auth.dart';
+import 'package:map_exam/logic/provider/auth_provider.dart';
 import 'package:map_exam/logic/provider/note_provider.dart';
 import 'package:map_exam/view/home_page/edit_screen.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('My Notes'),
         actions: [
+          IconButton(
+            onPressed: () async {
+              await Auth().logout();
+            },
+            icon: const Icon(Icons.logout),
+          ),
           CircleAvatar(
             backgroundColor: Colors.blue.shade200,
             child: Consumer<NoteProvider>(builder: (context, model, child) {

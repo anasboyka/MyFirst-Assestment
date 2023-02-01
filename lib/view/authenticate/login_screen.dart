@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:map_exam/constant/constant_widget.dart';
 import 'package:map_exam/logic/provider/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -52,9 +53,16 @@ class _LoginScreenState extends State<LoginScreen> {
               ElevatedButton(
                 child: const Text('Sign in'),
                 onPressed: () async {
-                  return await loginCon.loginWithEmailAndPassword();
+                  await loginCon.loginWithEmailAndPassword();
                 },
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              //loadingWidget
+              Provider.of<LoginProvider>(context).loading
+                  ? loadingWidget
+                  : const SizedBox()
             ],
           ),
         ),
