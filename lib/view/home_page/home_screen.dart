@@ -62,7 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             Icons.delete,
                             color: Colors.blue,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            model.deleteNote(index);
+                          },
                         ),
                       ],
                     ),
