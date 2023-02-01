@@ -8,19 +8,17 @@ class NoteProvider with ChangeNotifier {
   String? userUid;
   List<Note> notes;
   bool showContent;
-  // List<bool> showOptions;
+
   String mode;
   NoteProvider({
     this.userUid,
     this.notes = const [],
     this.showContent = true,
-    // this.showOptions = const [],
     this.mode = '',
   });
 
   Future initialize() async {
     notes = await fetchNotes();
-    // showOptions = List.filled(notes.length, false);
     notifyListeners();
   }
 
@@ -89,15 +87,15 @@ class NoteProvider with ChangeNotifier {
     this.mode = mode;
   }
 
-  // String getAppbarTitle() {
-  //   if (mode == 'View') {
-  //     return 'View Note';
-  //   } else if (mode == 'Edit') {
-  //     return 'Edit Note';
-  //   } else {
-  //     return 'Add Note';
-  //   }
-  // }
+  String getAppbarTitle() {
+    if (mode == 'View') {
+      return 'View Note';
+    } else if (mode == 'Edit') {
+      return 'Edit Note';
+    } else {
+      return 'Add Note';
+    }
+  }
 
   Future refreshData() async {}
 }
