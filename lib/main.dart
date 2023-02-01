@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:map_exam/data/remote/firebase/auth.dart';
+import 'package:map_exam/route_generator.dart';
 import 'package:map_exam/view/wrapper_startup.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,8 @@ class App extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         // home: const LoginScreen(),
-        home: const WrapperStartup(),
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator.generateRoute,
         // home: const EditScreen(),
       ),
     );

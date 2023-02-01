@@ -1,38 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:map_exam/data/model/note.dart';
+import 'package:map_exam/logic/provider/note_provider.dart';
+import 'package:map_exam/view/home_page/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class EditScreen extends StatefulWidget {
-  static Route route() => MaterialPageRoute(builder: (_) => const EditScreen());
-
-  const EditScreen({Key? key}) : super(key: key);
+  // static Route route() => MaterialPageRoute(builder: (_) => const EditScreen());
+  final Note? note;
+  const EditScreen({
+    Key? key,
+    required this.note,
+  }) : super(key: key);
 
   @override
   State<EditScreen> createState() => _EditScreenState();
 }
 
 class _EditScreenState extends State<EditScreen> {
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _titleController = TextEditingController(text: widget.note?.title);
+    _descriptionController = TextEditingController(text: widget.note?.content);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    String mode = Provider.of<NoteProvider>(context).mode;
+    print(mode);
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
         centerTitle: true,
-        title: const Text('App Bar Title'),
+        title: Text('Appbar Title'),
         actions: [
           IconButton(
-              icon: const Icon(
-                Icons.check_circle,
-                size: 30,
-              ),
-              onPressed: () {}),
+            icon: const Icon(
+              Icons.check_circle,
+              size: 30,
+            ),
+            onPressed: () async {},
+          ),
           IconButton(
               icon: const Icon(
                 Icons.cancel_sharp,
                 size: 30,
               ),
-              onPressed: () {}),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
         ],
       ),
       body: Container(

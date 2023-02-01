@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:map_exam/data/model/note.dart';
 import 'package:map_exam/data/remote/firebase/auth.dart';
 import 'package:map_exam/logic/provider/note_provider.dart';
+import 'package:map_exam/view/home_page/edit_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static Route route() => MaterialPageRoute(builder: (_) => const HomeScreen());
+
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -40,14 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Consumer<NoteProvider>(builder: (context, model, child) {
+      body: Consumer<NoteProvider>(builder: (_, model, child) {
         return ListView.separated(
           itemCount: model.notes.length,
           separatorBuilder: (context, index) => const Divider(
             color: Colors.blueGrey,
           ),
           itemBuilder: (context, index) => ListTile(
-            trailing: model.showOptions[index]
+            trailing: model.notes[index].showOption
                 ? SizedBox(
                     width: 110.0,
                     child: Row(
@@ -55,7 +58,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         IconButton(
                           icon: const Icon(Icons.edit, color: Colors.blue),
-                          onPressed: () {},
+                          onPressed: () {
+                            model.setMode('Edit');
+                            Navigator.of(context).pushNamed(
+                              '/editscreen',
+                              arguments: {
+                                'provider': Provider.of<NoteProvider>(context,
+                                    listen: false),
+                                'note': model.notes[index],
+                              },
+                            );
+                          },
                         ),
                         IconButton(
                           icon: const Icon(
@@ -74,7 +87,16 @@ class _HomeScreenState extends State<HomeScreen> {
             subtitle: model.showContent
                 ? Text(model.notes[index].content ?? "")
                 : null,
-            onTap: () {},
+            onTap: () {
+              model.setMode('View');
+              Navigator.of(context).pushNamed(
+                '/editscreen',
+                arguments: {
+                  'provider': Provider.of<NoteProvider>(context, listen: false),
+                  'note': model.notes[index],
+                },
+              );
+            },
             onLongPress: () {
               model.toggleShowOptions(index);
             },
@@ -86,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Consumer<NoteProvider>(builder: (context, model, child) {
             return FloatingActionButton(
+                heroTag: null,
                 child: Icon(model.showContent ? Icons.unfold_less : Icons.menu),
                 tooltip: 'Show less. Hide notes content',
                 onPressed: () {
@@ -95,13 +118,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
           /* Notes: for the "Show More" icon use: Icons.menu */
 
-          FloatingActionButton(
-            child: const Icon(Icons.add),
-            tooltip: 'Add a new note',
-            onPressed: () async {
-              await Auth().logout();
-            },
-          ),
+          Consumer<NoteProvider>(builder: (_, model, child) {
+            return FloatingActionButton(
+              heroTag: null,
+              child: const Icon(Icons.add),
+              tooltip: 'Add a new note',
+              onPressed: () async {
+                model.setMode('Add');
+                Navigator.of(context).pushNamed(
+                  '/editscreen',
+                  arguments: {
+                    'provider':
+                        Provider.of<NoteProvider>(context, listen: false),
+                  },
+                ).then((value) => print(model.notes.length));
+              },
+            );
+          }),
         ],
       ),
     );

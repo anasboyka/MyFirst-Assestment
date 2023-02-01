@@ -24,6 +24,14 @@ class FirestoreDb {
     }).toList();
   }
 
+  Future addNote(Note note) async {
+    return await noteCollection.add(note.toJson());
+  }
+
+  Future updateNote(Note note) async {
+    return await noteCollection.doc(note.documentID).update(note.toJson());
+  }
+
   Future deleteNote(String uid) async {
     return await noteCollection.doc(uid).delete();
   }
