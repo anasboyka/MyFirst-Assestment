@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:map_exam/data/remote/firebase/auth.dart';
 
 class HomeScreen extends StatelessWidget {
   static Route route() => MaterialPageRoute(builder: (_) => const HomeScreen());
@@ -66,7 +67,9 @@ class HomeScreen extends StatelessWidget {
           FloatingActionButton(
             child: const Icon(Icons.add),
             tooltip: 'Add a new note',
-            onPressed: () {},
+            onPressed: () async {
+              await Auth().logout();
+            },
           ),
         ],
       ),

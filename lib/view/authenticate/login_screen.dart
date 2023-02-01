@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:map_exam/logic/provider/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static Route route() =>
@@ -15,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loginCon = Provider.of<LoginProvider>(context, listen: false);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(28.0),
@@ -30,16 +33,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration:
                     const InputDecoration(hintText: 'Type your email here'),
                 onTap: () {},
+                onChanged: (value) {
+                  loginCon.setEmail(value);
+                },
               ),
               TextField(
                 controller: _passwordController,
+                obscureText: true,
                 decoration: const InputDecoration(
                   hintText: 'Type your password',
                 ),
                 onTap: () {},
+                onChanged: (value) {
+                  loginCon.setPassword(value);
+                },
               ),
               const SizedBox(height: 10.0),
-              ElevatedButton(child: const Text('Sign in'), onPressed: () {}),
+              ElevatedButton(
+                child: const Text('Sign in'),
+                onPressed: () async {
+                  return await loginCon.loginWithEmailAndPassword();
+                },
+              ),
             ],
           ),
         ),
