@@ -47,31 +47,35 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Colors.blueGrey,
           ),
           itemBuilder: (context, index) => ListTile(
-            // trailing: SizedBox(
-            //   width: 110.0,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: [
-            //       IconButton(
-            //         icon: const Icon(Icons.edit, color: Colors.blue),
-            //         onPressed: () {},
-            //       ),
-            //       IconButton(
-            //         icon: const Icon(
-            //           Icons.delete,
-            //           color: Colors.blue,
-            //         ),
-            //         onPressed: () {},
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            trailing: model.showOptions[index]
+                ? SizedBox(
+                    width: 110.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.edit, color: Colors.blue),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.delete,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  )
+                : null,
             title: Text(model.notes[index].title ?? ""),
             subtitle: model.showContent
                 ? Text(model.notes[index].content ?? "")
                 : null,
             onTap: () {},
-            onLongPress: () {},
+            onLongPress: () {
+              model.toggleShowOptions(index);
+            },
           ),
         );
       }),
