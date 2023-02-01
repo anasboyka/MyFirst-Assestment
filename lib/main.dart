@@ -27,6 +27,7 @@ class App extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'myFirst',
         theme: ThemeData(
           primarySwatch: Colors.blue,
