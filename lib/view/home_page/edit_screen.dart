@@ -30,21 +30,25 @@ class _EditScreenState extends State<EditScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String mode = Provider.of<NoteProvider>(context).mode;
-    print(mode);
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
         centerTitle: true,
-        title: Text('Appbar Title'),
+        title: Consumer<NoteProvider>(builder: (_, model, child) {
+          return Text(model.getAppbarTitle());
+        }),
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.check_circle,
-              size: 30,
-            ),
-            onPressed: () async {},
-          ),
+          Consumer<NoteProvider>(builder: (_, model, child) {
+            return model.mode != "View"
+                ? IconButton(
+                    icon: const Icon(
+                      Icons.check_circle,
+                      size: 30,
+                    ),
+                    onPressed: () async {},
+                  )
+                : const SizedBox();
+          }),
           IconButton(
               icon: const Icon(
                 Icons.cancel_sharp,
