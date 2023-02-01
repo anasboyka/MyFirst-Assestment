@@ -7,16 +7,17 @@ class NoteProvider with ChangeNotifier {
   String? userUid;
   List<Note> notes;
   bool showContent;
-  bool showOptions;
+  List<bool> showOptions;
   NoteProvider({
     this.userUid,
     this.notes = const [],
     this.showContent = true,
-    this.showOptions = false,
+    this.showOptions = const [],
   });
 
   Future initialize() async {
     notes = await fetchNotes();
+    showOptions = List.filled(notes.length, false);
     notifyListeners();
   }
 
@@ -32,6 +33,22 @@ class NoteProvider with ChangeNotifier {
 
   void toggleContent() {
     showContent = !showContent;
+    notifyListeners();
+  }
+
+  // void toggleShowOptions(int index) {
+  //   showOptions[index] = !showOptions[index];
+  //   notifyListeners();
+  // }
+
+  void toggleShowOptions(int index) {
+    for (var i = 0; i < notes.length; i++) {
+      if (i == index) {
+        showOptions[i] = !showOptions[i];
+      } else {
+        showOptions[i] = false;
+      }
+    }
     notifyListeners();
   }
 }
