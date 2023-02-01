@@ -14,7 +14,7 @@ class WrapperStartup extends StatelessWidget {
     final userAuthState = Provider.of<UserAuth?>(context);
     // check is login
     if (userAuthState != null) {
-      return ChangeNotifierProvider(
+      return ChangeNotifierProvider<NoteProvider>(
           create: (context) {
             return NoteProvider(userUid: userAuthState.uid, notes: []);
           },
